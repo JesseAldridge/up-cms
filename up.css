@@ -1,0 +1,96 @@
+.autofill {
+  background-color: rgb(250, 255, 189) !important;
+  background-image: none !important;
+  color: rgb(0, 0, 0) !important;
+}
+
+.form1 {
+  margin-left: 80px; margin-right: 80px; margin-top: 80px; display: inline-block; padding: 10px;
+  border: solid 1px; padding: 10px;
+  font-family: Helvetica
+}
+.form1 .label {
+  margin-bottom: 5px; font-size: 20px;
+}
+.form1 input {
+  font-size: 20px; margin-top: 3px;
+}
+.form1 input[type="submit"] {
+  cursor: pointer;
+  background-color: #ddd;
+  border: solid 1px;
+  padding: 7px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  margin-top: 5px;
+}
+.form1 input[type="submit"]:hover {
+  background-color: #eee;
+}
+
+.form2 input[type="submit"] {
+  margin-top: 20px;
+}
+
+.form3 {
+  margin-left: 80px; margin-right: 80px; margin-top: 80px; display: inline-block; padding: 10px;
+  border: solid 1px; padding: 10px;
+}
+.form3 .label {
+  font-family: Helvetica; margin-bottom: 5px; font-size: 20px;
+}
+.form3 input {
+  font-size: 20px; margin-top: 3px;
+  border: none; border-bottom: solid 1px;
+}
+
+.form4 {
+  margin-left: 80px; margin-right: 80px; margin-top: 80px; display: inline-block; padding: 10px;
+  border: solid 1px; padding: 10px;
+}
+.form4 .label {
+  font-family: Helvetica; margin-bottom: 5px; font-size: 20px;
+}
+.form4 input {
+  font-size: 20px; margin-top: 6px;
+  border: none; border-bottom: solid 1px;
+}
+
+.form5 {
+  margin-left: 80px; margin-right: 80px; margin-top: 80px; display: inline-block; padding: 10px;
+  border: solid 1px; padding: 10px;
+}
+.form5 .label {
+  font-family: Helvetica; margin-bottom: 0px; font-size: 20px;
+}
+.form5 input[type="text"], .form5 input[type="password"] {
+  margin-bottom: 5px; margin-top: 24px; border: none; border-bottom: solid 1px;
+  font-size: 15px;
+}
+.form5 input[type="submit"] {
+  margin-top: 15px;
+}
+.form5 ::placeholder { color: #888; }
+
+.form6 {
+  margin-left: 80px; margin-right: 80px; margin-top: 80px; display: inline-block; padding: 10px;
+  border: solid 1px; padding: 10px;
+}
+.form6 .label {
+  font-family: Helvetica; margin-bottom: 0px; font-size: 20px;
+}
+.form6 input[type="text"], .form6 input[type="password"] {
+  margin-bottom: 5px; margin-top: 24px; border: none; border-bottom: solid 1px;
+  font-size: 15px;
+}
+.form6 input[type="submit"] {
+  margin-top: 15px;
+  border: solid 1px;
+  border-radius: 5px;
+  padding: 5px;
+}
+.form6 ::placeholder { color: #888; }
