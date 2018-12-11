@@ -1,0 +1,149 @@
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css@8.0.1/normalize.css">
+
+<style type="text/css">
+  .autofill {
+    background-color: rgb(250, 255, 189) !important;
+    background-image: none !important;
+    color: rgb(0, 0, 0) !important;
+  }
+
+  .form1 {
+    margin-left: 80px; margin-right: 80px; margin-top: 80px; display: inline-block; padding: 10px;
+    border: solid 1px; padding: 10px;
+  }
+  .form1 .label {
+    font-family: Helvetica; margin-bottom: 5px; font-size: 20px;
+  }
+  .form1 input {
+    font-size: 20px; margin-top: 3px;
+  }
+
+  .form2 {
+    margin-left: 80px; margin-right: 80px; margin-top: 80px; display: inline-block; padding: 10px;
+    border: solid 1px; padding: 10px;
+  }
+  .form2 .label {
+    font-family: Helvetica; margin-bottom: 5px; font-size: 20px;
+  }
+  .form2 input {
+    font-size: 20px; margin-top: 3px;
+  }
+
+  .form3 {
+    margin-left: 80px; margin-right: 80px; margin-top: 80px; display: inline-block; padding: 10px;
+    border: solid 1px; padding: 10px;
+  }
+  .form3 .label {
+    font-family: Helvetica; margin-bottom: 5px; font-size: 20px;
+  }
+  .form3 input {
+    font-size: 20px; margin-top: 3px;
+    border: none; border-bottom: solid 1px;
+  }
+
+  .form4 {
+    margin-left: 80px; margin-right: 80px; margin-top: 80px; display: inline-block; padding: 10px;
+    border: solid 1px; padding: 10px;
+  }
+  .form4 .label {
+    font-family: Helvetica; margin-bottom: 5px; font-size: 20px;
+  }
+  .form4 input {
+    font-size: 20px; margin-top: 6px;
+    border: none; border-bottom: solid 1px;
+  }
+
+  .form5 {
+    margin-left: 80px; margin-right: 80px; margin-top: 80px; display: inline-block; padding: 10px;
+    border: solid 1px; padding: 10px;
+  }
+  .form5 .label {
+    font-family: Helvetica; margin-bottom: 0px; font-size: 20px;
+  }
+  .form5 input[type="text"], .form5 input[type="password"] {
+    margin-bottom: 5px; margin-top: 24px; border: none; border-bottom: solid 1px;
+    font-size: 15px;
+  }
+  .form5 input[type="submit"] {
+    margin-top: 15px;
+  }
+  .form5 ::placeholder { color: #888; }
+
+  .form6 {
+    margin-left: 80px; margin-right: 80px; margin-top: 80px; display: inline-block; padding: 10px;
+    border: solid 1px; padding: 10px;
+  }
+  .form6 .label {
+    font-family: Helvetica; margin-bottom: 0px; font-size: 20px;
+  }
+  .form6 input[type="text"], .form6 input[type="password"] {
+    margin-bottom: 5px; margin-top: 24px; border: none; border-bottom: solid 1px;
+    font-size: 15px;
+  }
+  .form6 input[type="submit"] {
+    margin-top: 15px;
+    border: solid 1px;
+    border-radius: 5px;
+    padding: 5px;
+  }
+  .form6 ::placeholder { color: #888; }
+</style>
+
+<script>
+  function toggle_autofill() {
+    const inputs = document.querySelectorAll('input[type="text"]');
+    const is_autofilled = (inputs[0].className.indexOf('autofill') != -1)
+    for(input of inputs) {
+      input.className = input.className.replace(' autofill', '')
+      input.className = input.className + (is_autofilled ? "" : " autofill");
+    }
+  }
+
+</script>
+
+<button class="toggle-autofill" onclick="toggle_autofill()">Toggle Autofill</button>
+
+<div>
+  <form class='form1'>
+    <div class='label'>Login</div>
+    <div><input type="text" placeholder="Username"></div>
+    <div><input type="text" placeholder="Password"></div>
+    <div><input type="text" name="name" id="frmNameA" placeholder="Full name" required autocomplete="name"></div>
+    <input type="submit">
+  </form>
+
+  <form class='form2'>
+    <div class='label'>Login</div>
+    <div><input type="text" placeholder="Username"></div>
+    <div><input type="text" placeholder="Password"></div>
+    <input type="submit">
+  </form>
+
+  <form class='form3'>
+    <div class='label'>Login</div>
+    <div><input type="text" placeholder="Username"></div>
+    <div><input type="text" placeholder="Password"></div>
+    <input type="submit">
+  </form>
+
+  <form class='form4'>
+    <div class='label'><u>Login</u></div>
+    <div><input type="text" placeholder="Username"></div>
+    <div><input type="text" placeholder="Password"></div>
+    <input type="submit">
+  </form>
+
+  <form class='form5'>
+    <div class='label'>Login</div>
+    <div><input type="text" placeholder="Username"></div>
+    <div><input type="text" placeholder="Password"></div>
+    <input type="submit">
+  </form>
+
+  <form class='form6'>
+    <div class='label'>Login</div>
+    <div><input type="text" placeholder="Username"></div>
+    <div><input type="text" placeholder="Password"></div>
+    <input type="submit">
+  </form>
+</div>

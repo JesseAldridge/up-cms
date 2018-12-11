@@ -15,10 +15,13 @@ function main_page() {
 }
 
 function admin_page() {
-  return 'Admin Page'
+  return fs.readFileSync('admin.html', 'utf8')
 }
 
 const server = http.createServer((req, res) => {
+  console.log('req:', req)
+
+
   let html = ''
   if(req.url == '/admin')
     html = admin_page(res)
