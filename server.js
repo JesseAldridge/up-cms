@@ -6,12 +6,24 @@ const mustache = require('mustache')
 const hostname = '127.0.0.1'
 const port = 3000
 
-const server = http.createServer((req, res) => {
+function main_page() {
   const article_text = fs.readFileSync('articles.json', 'utf8')
   const articles = JSON.parse(article_text)
 
   const index_text = fs.readFileSync('index.html', 'utf8')
-  const html = mustache.render(index_text, {article: articles})
+  return mustache.render(index_text, {article: articles})
+}
+
+function admin_page() {
+  return 'Admin Page'
+}
+
+const server = http.createServer((req, res) => {
+  let html = ''
+  if(req.url == '/admin')
+    html = admin_page(res)
+  else
+    html = main_page(res)
 
   res.statusCode = 200
   res.setHeader('Content-Type', 'text/html')
