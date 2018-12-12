@@ -20,7 +20,6 @@ const app = connect();
 const static = serveStatic('public')
 
 app.use(function(req, res, next){
-  debugger
   let response_string = ''
 
   if(req.url == '/')
@@ -45,7 +44,6 @@ app.use(function(req, res, next){
 })
 
 app.use(function(req, res, next) {
-  debugger
   static(req, res, next)
 })
 
