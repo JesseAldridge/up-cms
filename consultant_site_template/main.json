@@ -1,4 +1,12 @@
 {
+  "background-image": "shipwreck.jpeg",
   "logo_main": "Jesse Aldridge",
-  "logo_sub": "International"
+  "logo_sub": "International",
+  "menu_option": [
+    {"text": "Home"},
+    {"text": "About"},
+    {"text": "Media"},
+    {"text": "Testimonials"}
+  ],
+  "splash_copy": "Reticulating Splines"
 }

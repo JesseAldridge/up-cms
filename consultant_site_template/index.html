@@ -1,3 +1,4 @@
+<link rel="preload" as="image" href="{{background-image}}">
 <style>
   body {
     padding: 0;
@@ -32,7 +33,7 @@
   }
 
   .splash-div {
-    background-image:url('pawel-nolbert-291146-unsplash.jpg');
+    background-image:url('{{background-image}}');
     background-size: cover;
     background-color: rgba(0,0,0,.5);
     background-blend-mode: multiply;
@@ -45,6 +46,7 @@
     font-size: 60px;
     text-align: center;
     padding-top:20%;
+    text-transform: uppercase;
   }
 
   .buttons {
@@ -53,6 +55,7 @@
     float:right;
     font-weight: 600;
     padding-top: 10px;
+    text-transform: uppercase;
   }
 
   .button {
@@ -155,10 +158,11 @@
         {{#menu_option}}
         <span class='button'>{{text}}</span>
         {{/menu_option}}
+        <span class='contact button'>CONTACT</span>
       </span>
     </div>
     <div class='splash-copy'>
-      CAPTURE POSSIBILITIES
+      {{splash_copy}}
     </div>
   </div>
 
