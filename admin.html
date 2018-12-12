@@ -1,18 +1,14 @@
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css@8.0.1/normalize.css">
-
-<style>
-* { font-family: Helvetica }
-.main {margin-left: 20px }
-form { margin-left: 20px; }
-textarea { width: 400px; height: 100px; }
-</style>
+<link rel="stylesheet" type="text/css" href="shared.css">
 
 <div class='main'>
   <h1>Admin Section</h1>
 
+  <div style="margin-bottom: 20px"><a href='/'>Main Page</a></div>
+
   <div class='articles'>
     {{#article}}
-    <form class='form1 form2 form3 form4 form5 form6' action="/article" method="post">
+    <form class='form1 form2 form3 form4 form5 form6' action="/article-update" method="post">
       <div>Title:</div>
       <div><input type='text' name="title" placeholder="Title" value="{{title}}"></div>
       <div>Content:</div>
@@ -22,4 +18,14 @@ textarea { width: 400px; height: 100px; }
     </form>
     {{/article}}
   </div>
+
+  <h2>New Article</h2>
+
+  <form class='form1 form2 form3 form4 form5 form6' action="/article-create" method="post">
+    <div>Title:</div>
+    <div><input type='text' name="title" placeholder="Title" value="{{title}}"></div>
+    <div>Content:</div>
+    <textarea name="content" placeholder="Content">{{content}}</textarea>
+    <input type="submit" value="Save">
+  </form>
 </div>

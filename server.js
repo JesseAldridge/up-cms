@@ -26,7 +26,7 @@ function admin_get() {
   return mustache.render(index_text, {article: articles})
 }
 
-function article_post(req, res) {
+function article_update(req, res) {
   const article_text = fs.readFileSync('articles.json', 'utf8')
   const articles = JSON.parse(article_text)
   const target_id = parseInt(req.body.article_id)
@@ -36,6 +36,21 @@ function article_post(req, res) {
       article.content = req.body.content
       break
     }
+
+  const json_out = JSON.stringify(articles, null, 2)
+  fs.writeFileSync('articles.json', json_out)
+  res.writeHead(302, {'Location': '/'})
+  res.end()
+}
+
+function article_create(req, res) {
+  const article_text = fs.readFileSync('articles.json', 'utf8')
+  const articles = JSON.parse(article_text)
+  articles.push({
+    article_id: Math.round(Math.random() * Math.pow(10, 10)),
+    title: req.body.title,
+    content: req.body.content
+  })
 
   const json_out = JSON.stringify(articles, null, 2)
   fs.writeFileSync('articles.json', json_out)
@@ -84,8 +99,10 @@ app.use(function(req, res){
   if(req.method == 'POST') {
     if(req.url == '/login')
       return login_post(req, res)
-    else(req.url == '/article')
-      return article_post(req, res)
+    else if(req.url == '/article-update')
+      return article_update(req, res)
+    else if(req.url == '/article-create')
+      return article_create(req, res)
   }
   else {
     if(req.url == '/')
@@ -101,6 +118,10 @@ app.use(function(req, res){
     }
     else if(req.url == '/login-form.css') {
       response_string = fs.readFileSync('login-form.css', 'utf8')
+      content_type = 'text/css'
+    }
+    else if(req.url == '/shared.css') {
+      response_string = fs.readFileSync('shared.css', 'utf8')
       content_type = 'text/css'
     }
   }
