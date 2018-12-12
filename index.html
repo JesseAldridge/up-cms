@@ -1,7 +1,15 @@
+<link rel="stylesheet" type="text/css" href="up.css">
+
+<style>
+  * { font-family: Helvetica }
+  .admin { margin-top: 200px; }
+</style>
+
 <h1>My News Site</h1>
 <div class='articles'>
   {{#article}}
   <b>{{title}}</b>
   <div>{{content}}</div>
   {{/article}}
+  <div class='admin'><a href='/admin'>Admin</a></div>
 </div>
