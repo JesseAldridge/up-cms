@@ -18,6 +18,31 @@ function index_get() {
   return mustache.render(index_text, {article: articles})
 }
 
+function admin_get() {
+  const article_text = fs.readFileSync('articles.json', 'utf8')
+  const articles = JSON.parse(article_text)
+
+  const index_text = fs.readFileSync('admin.html', 'utf8')
+  return mustache.render(index_text, {article: articles})
+}
+
+function article_post(req, res) {
+  const article_text = fs.readFileSync('articles.json', 'utf8')
+  const articles = JSON.parse(article_text)
+  const target_id = parseInt(req.body.article_id)
+  for(let article of articles)
+    if(article.article_id == target_id) {
+      article.title = req.body.title
+      article.content = req.body.content
+      break
+    }
+
+  const json_out = JSON.stringify(articles, null, 2)
+  fs.writeFileSync('articles.json', json_out)
+  res.writeHead(302, {'Location': '/'})
+  res.end()
+}
+
 function login_post(req, res) {
   const saltRounds = 10
 
@@ -53,27 +78,31 @@ app.use(cookieSession({keys: ['auth_token']}));
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(function(req, res){
-  if(req.method == 'POST')
-    if(req.url == '/login')
-      return login_post(req, res)
-
   let response_string = ''
   let content_type = 'text/html'
 
-  if(req.url == '/')
-    response_string = index_get(res)
-  if(req.url == '/login')
-    response_string = fs.readFileSync('login.html', 'utf8')
-  else if(req.url == '/admin') {
-    const auth_token = req.session.auth_token
-    if(auth_token && auth_token == username_to_auth_token[req.session.username])
-      response_string = fs.readFileSync('admin.html', 'utf8')
-    else
-      response_string = fs.readFileSync('login.html', 'utf8')
+  if(req.method == 'POST') {
+    if(req.url == '/login')
+      return login_post(req, res)
+    else(req.url == '/article')
+      return article_post(req, res)
   }
-  else if(req.url == '/up.css') {
-    response_string = fs.readFileSync('up.css', 'utf8')
-    content_type = 'text/css'
+  else {
+    if(req.url == '/')
+      response_string = index_get()
+    if(req.url == '/login')
+      response_string = fs.readFileSync('login.html', 'utf8')
+    else if(req.url == '/admin') {
+      const auth_token = req.session.auth_token
+      if(auth_token && auth_token == username_to_auth_token[req.session.username])
+        response_string = admin_get()
+      else
+        response_string = fs.readFileSync('login.html', 'utf8')
+    }
+    else if(req.url == '/login-form.css') {
+      response_string = fs.readFileSync('login-form.css', 'utf8')
+      content_type = 'text/css'
+    }
   }
 
   if(!response_string) {
