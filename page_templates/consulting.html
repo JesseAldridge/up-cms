@@ -162,9 +162,9 @@
         <div class='logo-sub'>{{logo_sub}}</div>
       </div>
       <span class='buttons'>
-        {{#menu_option}}
+        {{#menu_options}}
         <span class='button'>{{.}}</span>
-        {{/menu_option}}
+        {{/menu_options}}
         <span class='contact button'>CONTACT</span>
       </span>
     </div>
@@ -181,13 +181,13 @@
       <i>"{{quote}}"</i><br>
       {{quote_source}}
     </div>
-    {{#main_copy}}
+    {{#main_paragraphs}}
     <div class="subtext verbose">{{{.}}}</div>
-    {{/main_copy}}
+    {{/main_paragraphs}}
 
     <div class='pics-wrapper'>
 
-      {{#pic_section}}
+      {{#pic_sections}}
       <div class='pic-section'>
         {{#before-image}}
           <img src="{{.}}">
@@ -203,7 +203,7 @@
           <img src="{{.}}">
         {{/after-image}}
       </div>
-      {{/pic_section}}
+      {{/pic_sections}}
 
     </div>
 
