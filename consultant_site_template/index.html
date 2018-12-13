@@ -82,6 +82,7 @@
   }
 
   .subtext {
+    font-family: Helvetica;
     font-size: 17px;
     margin-top: 40px;
     width: 650px;
@@ -168,68 +169,35 @@
 
   <div class='main-copy'>
     <div>
-      Welcome to James Webb International, LLC.
+      {{welcome}}
     </div>
     <div class='subtext'>
-      <i>"If you think you can't do it, James Webb will persuade you that you can."</i><br>
-      - Kathy Hanes, Orange County Utilities
+      <i>"{{quote}}"</i><br>
+      {{quote_source}}
     </div>
-    <div class="subtext verbose">
-      Are you ready to LIVE your vision? James Webb International helps thousands of people just like you achieve their vision utilizing years of workforce development experience and creativity, proven leadership techniques, world-renowned speaking skills and personal success practices.
-    </div>
-    <div class="subtext verbose">
-      Renowned by Toastmasters International as <a href="https://www.jw-int.com/app/download/961078158/James_Webb_Release.pdf">One of the Top Three Best Speakers in the World</a>, James doesn't buy into the "this is how we've always done it" approach. He truly believes, "Nothing stays the same. It gets better or it gets worse; it's up to us!"
-    </div>
-    <div class="subtext verbose">
-      If you're in need of a professional speaker, a creative instructional designer or a professional consultant, then James is right for you.
-    </div>
-    <div class="subtext verbose">
-      Browse around and see what James has to offer!
-    </div>
-
-    <iframe class="soundcloud" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F230823955&amp;show_artwork=true&amp;secret_token=s-ARbqs&amp;auto_play=false&amp;color=0066cc">
-    </iframe>
+    {{#main_copy}}
+    <div class="subtext verbose">{{{text}}}</div>
+    {{/main_copy}}
 
     <div class='pics-wrapper'>
 
+      {{#pic_section}}
       <div class='pic-section'>
-        <img src="https://www.jw-int.com/s/cc_images/cache_942292947.jpg?t=1424141034">
+        {{#before-image}}
+          <img src="{{src}}">
+        {{/before-image}}
         <div class='pic-text'>
-          <div class='pic-label'>SPEAKER</div>
-          <div>
-            Turn your dreams into visions! Experience James' speeches and sessions and he will help you turn  your possibilities into reality with  proven practices and a positive approach.
-          </div>
+          <div class='pic-label'>{{label}}</div>
+          <div>{{text}}</div>
           <div class='pic-button'>
             LEARN MORE
           </div>
         </div>
+        {{#after-image}}
+          <img src="{{src}}">
+        {{/after-image}}
       </div>
-
-      <div class='pic-section'>
-        <div class='pic-text'>
-          <div class='pic-label'>TRAINER</div>
-          <div>
-            Do you have a training problem? Let James design a creative and innovative training solution for you. He has a proven track record of 20+ years of industry-specific experience while assessing project risks.
-          </div>
-          <div class='pic-button'>
-            LEARN MORE
-          </div>
-        </div>
-        <img src="https://www.jw-int.com/s/cc_images/cache_942292943.jpg?t=1424141025">
-      </div>
-
-      <div class='pic-section'>
-        <img src="https://www.jw-int.com/s/cc_images/cache_942271674.jpg?t=1424040667">
-        <div class='pic-text'>
-          <div class='pic-label'>CONSULTANT</div>
-          <div>
-            Overcome any obstacle standing between your immediate needs and your vision. Learn how to unleash positive potential in your personal or professional career.
-          </div>
-          <div class='pic-button'>
-            LEARN MORE
-          </div>
-        </div>
-      </div>
+      {{/pic_section}}
 
     </div>
   </div>

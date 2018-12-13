@@ -8,5 +8,42 @@
     {"text": "Media"},
     {"text": "Testimonials"}
   ],
-  "splash_copy": "Reticulating Splines"
+  "splash_copy": "Homogenous Manipulation",
+  "welcome": "Welcome to Jesse Aldridge International, LLC.",
+  "quote": "You miss 100% of the shots you don't take.",
+  "quote_source": "- Wayne Gretzky, Former President of the United States",
+  "main_copy": [
+    {
+      "text": "Do YOU believe in miracles? Jesse Aldridge International helps thousands of people just like you achieve their dreams by leveraging economies of scale to unlock creative, proven leadership techniques. With world-renowned management skills and cutting-edge technology, we can make magic work for you."
+    },
+    {
+      "text": "Widely renowned as a <a href=\"https://www.linkedin.com/title/chief-expert\">World Class Chief Expert</a>, Jesse doesn't stop until the job is done. The path to his fixed purpose is laid with iron rails, whereon his soul is grooved to run. Over unsounded gorges, through the rifled hearts of mountains, under torrents' beds, unerringly he rushes! Naught's an obstacle, naught's an angle to the iron way!"
+    },
+    {
+      "text": "If you're in need of a guidance counseler, a mercenary supersolider, or a mediocre software engineer, then Jesse just might be the man your looking for."
+    }
+  ],
+  "pic_section": [
+    {
+      "before-image": {
+        "src": "meeting.jpg"
+      },
+      "label": "STOCK ART",
+      "text": "Did someone stay stock art? Boy do we have you covered there! For mere pennies, Jesse will use cutting edge search technology to identify and obtain action-oriented imagery for your action-oriented lifestyle."
+    },
+    {
+      "after-image": {
+        "src": "walking.jpg"
+      },
+      "label": "FAILURE",
+      "text": "What is wrong with you? Why are you such a failure at everything you attempt? Maybe things would go better if you leveraged Jesse's proven track record of 15 years of high flying full-stack web development experience."
+    },
+    {
+      "before-image": {
+        "src": "visioning.jpg"
+      },
+      "label": "OH FUCK",
+      "text": "Look at this guy. He's staring up and to the right. Just like your revenue graph after you start working with Jesse! I bet you're definitely ready to spend some money now."
+    }
+  ]
 }
