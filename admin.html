@@ -1,0 +1,61 @@
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css@8.0.1/normalize.css">
+<link rel="stylesheet" type="text/css" href="../login-form.css">
+<meta charset="utf-8">
+<style type="text/css">
+  body { background: white }
+  h1 { padding-top: 20px; }
+  .main { padding-left: 30px; padding-bottom: 100px }
+  .view-page { margin-top:50px; }
+  textarea { width: 600px; height: 400px; margin-top: 50px; }
+  .valid-json { margin-top: 50px; }
+</style>
+
+<script>
+  function save() {
+    const content = document.getElementById('main-text').value
+
+    if(!check_valid_json(content))
+      return
+
+    fetch("/admin/{{user_id}}", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: content
+    }).then(function(response) {
+      document.location.reload();
+    });
+  }
+
+  function reset() {
+    fetch("/reset/{{user_id}}", {method: 'POST'}).then(function(response) {
+      document.location.reload();
+    });;
+  }
+
+  function check_valid_json(content) {
+    let result = null
+    try {
+      result = JSON.parse(content);
+    } catch(e) {}
+
+    const fail_str = '❌ Try <a href="https://jsonlint.com">JsonLint.com</a>'
+    document.getElementById('valid-json').innerHTML = (result ? '✅': fail_str)
+    return result
+  }
+
+  window.onload = function() {
+    check_valid_json(document.getElementById('main-text').textContent)
+  }
+</script>
+
+<div class='main'>
+  <h1>Admin Section</h1>
+
+  <div class='view-page'><a href='/{{user_id}}'>View your page</a></div>
+
+  <textarea id='main-text' onchange="check_valid_json(this.value)">{{site_json}}</textarea>
+  <input type='submit' onclick="save()" value='save'>
+  <input type='submit' onclick="reset()" value='reset'>
+
+  <div class='valid-json'>Valid Json? <span id='valid-json'></span></div>
+</div>

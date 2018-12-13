@@ -2,9 +2,8 @@ const fs = require('fs')
 const http = require('http')
 
 const connect = require('connect')
-var bodyParser = require('body-parser')
-var cookieSession = require('cookie-session')
-
+const bodyParser = require('body-parser')
+const cookieSession = require('cookie-session')
 const bcrypt = require('bcrypt')
 const mustache = require('mustache')
 
@@ -59,8 +58,6 @@ function article_create(req, res) {
 }
 
 function login_post(req, res) {
-  const saltRounds = 10
-
   const users_json = fs.readFileSync('users.json', 'utf8')
   const users = JSON.parse(users_json)
   const user = users[req.body.username]
