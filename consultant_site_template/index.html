@@ -73,7 +73,6 @@
     color: #222;
     text-align: center;
     padding-top: 80px;
-    padding-bottom: 100px;
     font-weight: 300;
     font-family: Garamond;
     font-size: 32px;
@@ -103,6 +102,7 @@
 
   .pics-wrapper {
     margin-top: 80px;
+    padding-bottom: 100px;
   }
 
   .pic-section {
@@ -146,6 +146,12 @@
     font-family: Helvetica;
     font-size: 13px;
     cursor: pointer;
+  }
+
+  .footer {
+    padding-bottom: 10px;
+    font-size: 15px;
+    font-family: Helvetica;
   }
 </style>
 <body>
@@ -200,6 +206,7 @@
       {{/pic_section}}
 
     </div>
-  </div>
 
+    <div class="footer">{{{footer}}}</div>
+  </div>
 </body>
