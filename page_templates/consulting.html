@@ -163,7 +163,7 @@
       </div>
       <span class='buttons'>
         {{#menu_option}}
-        <span class='button'>{{text}}</span>
+        <span class='button'>{{.}}</span>
         {{/menu_option}}
         <span class='contact button'>CONTACT</span>
       </span>
@@ -182,7 +182,7 @@
       {{quote_source}}
     </div>
     {{#main_copy}}
-    <div class="subtext verbose">{{{text}}}</div>
+    <div class="subtext verbose">{{{.}}}</div>
     {{/main_copy}}
 
     <div class='pics-wrapper'>
@@ -190,7 +190,7 @@
       {{#pic_section}}
       <div class='pic-section'>
         {{#before-image}}
-          <img src="{{src}}">
+          <img src="{{.}}">
         {{/before-image}}
         <div class='pic-text'>
           <div class='pic-label'>{{label}}</div>
@@ -200,7 +200,7 @@
           </div>
         </div>
         {{#after-image}}
-          <img src="{{src}}">
+          <img src="{{.}}">
         {{/after-image}}
       </div>
       {{/pic_section}}
