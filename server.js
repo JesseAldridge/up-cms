@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt')
 const bodyParser = require('body-parser')
 const connect = require('connect')
 const cookieSession = require('cookie-session')
+const glob = require('glob')
 const mustache = require('mustache')
 const serveStatic = require('serve-static')
 const expand_home_dir = require('expand-home-dir')
@@ -33,17 +34,22 @@ function site_get(req, res, next) {
     return
   }
 
-  const main_text = fs.readFileSync(json_path, 'utf8')
-  const main_obj = JSON.parse(main_text)
-
-  const template_name = sanitize(main_obj.template_name || 'consulting')
-  const template_html = fs.readFileSync(`page_templates/${template_name}.html`, 'utf8')
-  const rendered_html = mustache.render(template_html, main_obj)
+  const rendered_html = render_page(json_path)
 
   res.statusCode = 200
   res.setHeader('Content-Type', 'text/html')
   res.end(rendered_html)
 }
+
+function render_page(json_path) {
+  const main_json = fs.readFileSync(json_path, 'utf8')
+  const main_obj = JSON.parse(main_json)
+
+  const template_name = sanitize(main_obj.template_name || 'consulting')
+  const template_html = fs.readFileSync(`page_templates/${template_name}.html`, 'utf8')
+  return mustache.render(template_html, main_obj)
+}
+
 
 function signup_post(req, res) {
   const email = req.body.email
@@ -130,9 +136,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next){
-  let response_string = ''
-
   console.log('url:', req.url)
+
+  let response_string = ''
 
   if(req.method == 'POST') {
     if(req.url == '/login')
@@ -175,8 +181,17 @@ app.use(function(req, res, next){
     }
   }
   else {
-    if(req.url == '/')
-      response_string = fs.readFileSync('index.html', 'utf8')
+    if(req.url == '/') {
+      if(process.argv[3] == 'single-site') {
+        const site_path = glob.sync(SITES_PATH + '/*.json')[0]
+        if(site_path)
+          response_string = render_page(site_path)
+        else
+          response_string = fs.readFileSync('index.html', 'utf8')
+      }
+      else
+        response_string = fs.readFileSync('index.html', 'utf8')
+    }
     else if(req.url == '/login')
       response_string = fs.readFileSync('login.html', 'utf8')
     else if(req.url == '/signup')
