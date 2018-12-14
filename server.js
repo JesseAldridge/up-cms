@@ -148,7 +148,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next){
-  console.log('url:', req.url)
+  const ip_address = req.connection.remoteAddress
+  console.log(`${new Date().toUTCString()} request from: ${ip_address}, ${req.url}`);
 
   let response_string = ''
 
