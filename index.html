@@ -53,26 +53,30 @@
   }
 
   .splash-copy {
-    padding-left: 100px;
-    padding-top: 150px;
     padding-bottom: 150px;
   }
 
-  .splash-copy .first-line {
+  .splash-copy .left {
     width: 500px;
+    padding-top: 150px;
+    padding-left: 100px;
+    padding-bottom: 100px;
+    padding-right: 200px;
+    background: -webkit-gradient(linear, left center, right center,
+                         from(#000f), to(#0000));
+  }
+
+  .splash-copy .first-line {
     font-size: 50px;
     font-weight: bolder;
-    background: #00000088;
     padding: 10px;
   }
 
   .splash-copy .second-line {
-    width: 500px;
     font-size: 30px;
     margin-top: 50px;
     font-weight: 400;
     color: #F594aC;
-    background: #00000088;
     padding: 10px;
   }
 
@@ -130,9 +134,11 @@
     </div>
 
     <div class='splash-copy'>
-      <div class='first-line'>Create a website with Winter</div>
-      <div class='second-line'>Winter CMS is a new, easy to use page builder.</div>
-      <a class='cta' href="/signup">Start Building Now</a>
+      <div class='left'>
+        <div class='first-line'>Create a website with Winter</div>
+        <div class='second-line'>Winter CMS is a new, easy to use page builder.</div>
+        <a class='cta' href="/signup">Start Building Now</a>
+      </div>
       <div class='img-container'>
         <img src='flowers.jpg'/>
       </div>
