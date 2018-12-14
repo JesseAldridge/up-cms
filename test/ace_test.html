@@ -1,0 +1,18 @@
+<style>
+  #editor {
+    width: 500px;
+    height:500px;
+  }
+</style>
+
+<div>stuff before</div>
+<div id="editor"></div>
+<div>stuff after</div>
+
+<!-- <script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/monokai");
+  editor.session.setMode("ace/mode/json");
+</script>
