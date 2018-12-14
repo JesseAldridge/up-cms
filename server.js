@@ -217,3 +217,4 @@ app.use(function(req, res, next) {
 })
 
 http.createServer(app).listen(PORT)
+console.log(`listening on ${PORT}`)
