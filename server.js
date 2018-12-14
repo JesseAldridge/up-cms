@@ -10,7 +10,7 @@ const serveStatic = require('serve-static')
 const expand_home_dir = require('expand-home-dir')
 var shell = require('shelljs')
 
-const PORT = 3000
+const PORT = (process.argv[2] ? parseInt(process.argv[2]) : 3000)
 const SITES_PATH = expand_home_dir('~/winter/sites')
 
 let email_to_user = {}
