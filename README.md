@@ -3,7 +3,7 @@ Overview
 
 With Winter CMS you can use a JSON file to specify the content of a templatized web page.
 
-[WinterCMS.com](www.winter-cms.com)
+[WinterCMS.com](http://www.wintercms.com)
 
 Install
 ---
