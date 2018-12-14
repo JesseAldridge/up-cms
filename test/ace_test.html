@@ -1,18 +1,47 @@
 <style>
   #editor {
     width: 500px;
-    height:500px;
+    height: 500px;
   }
 </style>
 
-<div>stuff before</div>
-<div id="editor"></div>
-<div>stuff after</div>
+<div id="editor">{
+  "color": "red",
+  "animal": "elephant"
+}</div>
 
-<!-- <script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
 <script>
+  var langTools = ace.require("ace/ext/language_tools");
+
   var editor = ace.edit("editor");
   editor.setTheme("ace/theme/monokai");
   editor.session.setMode("ace/mode/json");
+  editor.setOptions({
+    enableLiveAutocompletion: true,
+  });
+
+  langTools.setCompleters([{
+    getCompletions: function(editor, session, pos_obj, prefix, callback) {
+      console.log('getCompletions')
+      const content = editor.session.getValue()
+      const lines = content.split('\n')
+      const line = lines[pos_obj.row]
+      if(line.match(/\bcolor\b/))
+        callback(null, [
+          {name: "red", value: "red", score: 1000, meta: "color"},
+          {name: "green", value: "green", score: 1000, meta: "color"},
+          {name: "blue", value: "blue", score: 1000, meta: "color"}
+        ])
+      else if(line.match(/\banimal\b/))
+        callback(null, [
+          {name: "hamster", value: "hamster", score: 1000, meta: "template"},
+          {name: "elephant", value: "elephant", score: 1000, meta: "template"}
+        ])
+      else
+        callback(null, [])
+    }
+  }]);
+
 </script>

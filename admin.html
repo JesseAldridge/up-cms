@@ -27,6 +27,9 @@
     cursor: pointer;
     margin-right: 10px;
   }
+
+  .notes { margin-top: 40px; }
+  .note-option { color: #ff618a; }
 </style>
 
 
@@ -41,15 +44,60 @@
     <input type='submit' onclick="save()" value='Save'>
     <input type='submit' onclick="reset()" value='Reset'>
   </div>
+
+  <div class='notes'>
+    Available templates:
+    <span class='note-option'>consulting</span>
+  </div>
+  <div>
+    Available images:
+
+    <a href="../meeting.jpg">meeting.jpg</a>
+    <a href="../shipwreck.jpeg">shipwreck.jpeg</a>
+    <a href="../stuff.jpg">stuff.jpg</a>
+    <a href="../swimming.jpeg">swimming.jpeg</a>
+    <a href="../visioning.jpg">visioning.jpg</a>
+    <a href="../walking.jpg">walking.jpg</a>
+  </div>
 </div>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+
 
 <script>
+  var langTools = ace.require("ace/ext/language_tools");
+
   var editor = ace.edit("editor");
   editor.setTheme("ace/theme/monokai");
   editor.session.setMode("ace/mode/json");
+  editor.setOptions({
+    enableLiveAutocompletion: true,
+  });
+
+  langTools.setCompleters([{
+    getCompletions: function(editor, session, pos_obj, prefix, callback) {
+      console.log('getCompletions')
+      const content = editor.session.getValue()
+      const lines = content.split('\n')
+      const line = lines[pos_obj.row]
+      if(line.match(/\btemplate_name\b/))
+        callback(null, [
+          {name: "consulting", value: "consulting", score: 1000, meta: "template"}
+        ])
+      else if(line.match(/\bimage\b/))
+        callback(null, [
+          {name: "meeting", value: "meeting.jpg", score: 1000, meta: "template"},
+          {name: "shipwreck", value: "shipwreck.jpeg", score: 1000, meta: "template"},
+          {name: "swimming", value: "swimming.jpeg", score: 1000, meta: "template"},
+          {name: "visioning", value: "visioning.jpg", score: 1000, meta: "template"},
+          {name: "walking", value: "walking.jpg", score: 1000, meta: "template"},
+        ])
+      else
+        callback(null, [])
+    }
+  }]);
 
   function save() {
     const content = editor.session.getValue()
