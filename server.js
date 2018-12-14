@@ -132,6 +132,8 @@ app.use(bodyParser.json());
 app.use(function(req, res, next){
   let response_string = ''
 
+  console.log('url:', req.url)
+
   if(req.method == 'POST') {
     if(req.url == '/login')
       return signup_post(req, res)
