@@ -13,10 +13,12 @@ var shell = require('shelljs')
 
 const PORT = (process.argv[2] ? parseInt(process.argv[2]) : 3000)
 const SITES_PATH = expand_home_dir('~/winter/sites')
+const DATA_PATH = expand_home_dir('~/winter')
+const USERS_PATH = expand_home_dir('~/winter/email_to_user.json')
 
 let email_to_user = {}
-if(fs.existsSync('email_to_user.json')) {
-  const users_json = fs.readFileSync('email_to_user.json', 'utf8')
+if(fs.existsSync(USERS_PATH)) {
+  const users_json = fs.readFileSync(USERS_PATH, 'utf8')
   email_to_user = JSON.parse(users_json)
 }
 
@@ -72,7 +74,9 @@ function signup_post(req, res) {
         }
 
         const users_json = JSON.stringify(email_to_user, null, 2)
-        fs.writeFileSync('email_to_user.json', users_json, 'utf8')
+        if(!fs.existsSync(DATA_PATH))
+          shell.mkdir('-p', DATA_PATH)
+        fs.writeFileSync(USERS_PATH, users_json, 'utf8')
 
         reset_site(user_id)
 
@@ -196,6 +200,14 @@ app.use(function(req, res, next){
       response_string = fs.readFileSync('login.html', 'utf8')
     else if(req.url == '/signup')
       response_string = fs.readFileSync('signup.html', 'utf8')
+    else if(req.url == '/admin' && process.argv[3] == 'single-site') {
+      const auth_token = req.session.auth_token
+      const user = email_to_user[req.session.email]
+      if(auth_token && user && auth_token == user.auth_token)
+        response_string = admin_get(user.user_id)
+      else
+        response_string = fs.readFileSync('login.html', 'utf8')
+    }
     else if(req.url.match(/^\/admin\/[0-9]+$/)) {
       const auth_token = req.session.auth_token
       const user = email_to_user[req.session.email]
