@@ -3,7 +3,7 @@
 
 <style>
   body {
-    background: #144;
+    background: #000;
   }
 
   .main {
@@ -15,6 +15,15 @@
     display: flex;
     justify-content: space-between;
     vertical-align: bottom;
+  }
+
+  .header a {
+    text-decoration: none;
+  }
+
+  .header a:visited {
+    text-decoration: none;
+    color: white;
   }
 
   .header .left {
@@ -43,11 +52,6 @@
     cursor: pointer;
   }
 
-  .header .option:nth-child(even) {
-    font-size: 15px;
-    font-weight: 600;
-  }
-
   .splash-copy {
     padding-left: 100px;
     padding-top: 150px;
@@ -58,14 +62,18 @@
     width: 500px;
     font-size: 50px;
     font-weight: bolder;
+    background: #00000088;
+    padding: 10px;
   }
 
   .splash-copy .second-line {
     width: 500px;
     font-size: 30px;
-    margin-top: 30px;
+    margin-top: 50px;
     font-weight: 400;
-    color: #b5f4fc;
+    color: #F594aC;
+    background: #00000088;
+    padding: 10px;
   }
 
   .splash-copy .cta {
@@ -74,7 +82,7 @@
     background: white;
     border-radius: 5px;
     color: #363a3d;
-    margin-top: 30px;
+    margin-top: 60px;
     width: 300px;
     padding: 10px;
     text-align: center;
@@ -83,23 +91,12 @@
     cursor: pointer;
   }
 
-  .splash-copy .cta-secondary {
-    margin-top: 30;
-    font-size: 20px;
-    color: #b5f4fc;
-    font-weight: 300;
-  }
-
-  .splash-copy .cta-secondary::after {
-    content: " \203a";
-  }
-
   .splash-copy .img-container {
     position: absolute;
     right: 5%;
     bottom: 16%;
-    background: #005669;
-    z-index: 1;
+    background: #444;
+    z-index: -1;
   }
 
   .splash-copy img {
@@ -128,17 +125,16 @@
         <div class='logo'>Winter</div>
       </div>
       <div class='right'>
-        <div class='option'>Login</div>
-        <div class='option'>Get Started</div>
+        <div class='option'><a href='/signup'>Login</a></div>
       </div>
     </div>
 
     <div class='splash-copy'>
       <div class='first-line'>Create a website with Winter</div>
-      <div class='second-line'>Winter CMS provides everything you need to get online today.</div>
-      <a class='cta' href="/signup">Start Building</a>
+      <div class='second-line'>Winter CMS is a new, easy to use page builder.</div>
+      <a class='cta' href="/signup">Start Building Now</a>
       <div class='img-container'>
-        <img src='stuff.jpg'/>
+        <img src='flowers.jpg'/>
       </div>
     </div>
   </div>
