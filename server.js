@@ -22,6 +22,10 @@ if(fs.existsSync(USERS_PATH)) {
   email_to_user = JSON.parse(users_json)
 }
 
+function get_email(req) {
+  return req.body.email.toLowerCase()
+}
+
 function site_get(req, res, next) {
   const match = /\/([a-zA-Z0-9\-_]+$)/.exec(req.url)
   if(!match || !match[1]) {
@@ -52,9 +56,13 @@ function render_page(json_path) {
   return mustache.render(template_html, main_obj)
 }
 
-
 function signup_post(req, res) {
-  const email = req.body.email
+  const email = get_email(req)
+  if(!email.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}/)) {
+    res.statusCode = 400
+    res.end('invalid email')
+    return
+  }
 
   if(email_to_user[email]) {
     login_post(req, res)
@@ -81,7 +89,7 @@ function signup_post(req, res) {
         reset_site(user_id)
 
         req.session.auth_token = user.auth_token = Math.random()
-        req.session.email  = req.body.email
+        req.session.email  = get_email(req)
         res.writeHead(302, {'Location': `/admin/${user_id}`})
         res.end()
       });
@@ -89,7 +97,7 @@ function signup_post(req, res) {
 }
 
 function login_post(req, res) {
-  const user = email_to_user[req.body.email]
+  const user = email_to_user[get_email(req)]
 
   if(!user) {
     res.statusCode = 401
@@ -99,8 +107,8 @@ function login_post(req, res) {
 
   bcrypt.compare(req.body.password, user.password_hash, function(err, is_match) {
     if(is_match) {
-      req.session.auth_token = email_to_user[req.body.email].auth_token = Math.random()
-      req.session.email = req.body.email
+      req.session.auth_token = email_to_user[get_email(req)].auth_token = Math.random()
+      req.session.email = get_email(req)
       res.writeHead(302, {'Location': `/admin/${user.user_id}`})
       res.end()
     }
