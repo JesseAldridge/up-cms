@@ -23,9 +23,6 @@ node server.js 80
 CMS Comparison
 ---
 
-File count
----
-
 | Name      | File Count    | LOC Count   |
 | --------- | ------------- | ----------- |
 | WordPress | 1387          | 630165      |
