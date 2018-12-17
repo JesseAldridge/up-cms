@@ -20,6 +20,15 @@ npm install
 node server.js 80
 ```
 
+Wordpress Comparison
+---
+
+$ tree wordpress-sample-site/ | wc -l
+  1888
+
+$ tree -I 'node_modules' winter-cms/ | wc -l
+  22
+
 Image Credits
 ---
 swimming.jpeg -- https://unsplash.com/photos/aEtl64kP8mk
