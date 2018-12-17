@@ -205,10 +205,8 @@ app.use(function(req, res, next){
       else
         response_string = fs.readFileSync('index.html', 'utf8')
     }
-    else if(req.url == '/login')
+    else if(req.url == '/login' || req.url == '/signup')
       response_string = fs.readFileSync('login.html', 'utf8')
-    else if(req.url == '/signup')
-      response_string = fs.readFileSync('signup.html', 'utf8')
     else if(req.url == '/admin' && process.argv[3] == 'single-site') {
       const auth_token = req.session.auth_token
       const user = email_to_user[req.session.email]
