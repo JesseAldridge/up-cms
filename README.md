@@ -23,11 +23,13 @@ node server.js 80
 CMS Comparison
 ---
 
-| Name      | File Count    | LOC Count   |
-| --------- | ------------- | ----------- |
-| WordPress | 1387          | 630165      |
-| Pico      | 16            | 5396        |
-| Winter    | 10            | 1768        |
+| Name      | File Count    | LOC Count   | RepoQ  | Market Share   |
+| --------- | ------------- | ----------- | ------ | -------------- |
+| WordPress | 1387          | 630165      | N/A    | 59.6% (18 mil) |
+| Pico      | 16            | 5396        | 14992  | < .01% (200)   |
+| Winter    | 10            | 1768        | 0      | < .01%  (1)    |
+
+https://w3techs.com/technologies/overview/content_management/all
 
 ```
 
