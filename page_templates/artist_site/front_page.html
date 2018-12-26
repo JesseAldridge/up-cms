@@ -1,0 +1,138 @@
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css@8.0.1/normalize.css">
+<link href="https://fonts.googleapis.com/css?family=Erica+One|Roboto" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+
+
+<style type="text/css">
+  html {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    width: 100%;
+    min-height: 1000px;
+  }
+  .header {
+    background: black;
+    color: white;
+  }
+  .topbar {
+    text-align: center;
+    background: blue;
+    color: white;
+    font-family: Roboto;
+    font-size: 83%;
+    background: #428EF7;
+    padding: 10px 0px;
+  }
+  .second-bar {
+   padding: 24px 20px;
+   position: relative;
+   display: flex;
+  }
+  .second-bar-main {
+    display: inline-block;
+    text-align: center;
+    flex-grow: 1;
+  }
+  .menu-button {
+    display: inline-block;
+    cursor: pointer;
+  }
+  .title {
+    display: inline-block;
+    font-family: Impact;
+    font-size: 30px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+  .splash-img {
+    width: 100%;
+  }
+
+
+  .menu {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: black;
+    color: white;
+    z-index: 1;
+    transition: .5s;
+  }
+
+  .menu.closed {
+    /*display: none;*/
+    left: -100%;
+  }
+
+  .option {
+    font-size: 16px;
+    font-family: Helvetica;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 32px;
+    cursor: pointer;
+  }
+
+  .option:hover {
+    color: red;
+  }
+
+  @media screen and (min-width: 1000px) {
+  /*  .navbar {
+      display: inline-block;
+    }
+    .option {
+      display: inline-block;
+      margin-left: 30px;
+    }*/
+  }
+</style>
+
+<script>
+  let menu = function() {
+    let menu_open = true
+
+    return {
+      close: function() {
+        menu_open = false
+        this.set_html()
+      },
+      open: function() {
+        menu_open = true
+        this.set_html()
+      },
+      set_html() {
+        const menu_button = document.querySelector('.menu')
+        menu_button.classList.remove("closed")
+        if(!menu_open)
+          menu_button.classList.add("closed")
+      }
+    }
+  }()
+</script>
+
+<div class='menu'>
+  <div class='option' onclick="menu.close()">
+    <i class="fas fa-window-close"></i>
+  </div>
+  <div class='option'>FIRST IN LINE</div>
+  <div class='option'>PODCAST</div>
+  <div class='option'>BLOG</div>
+  <div class='option'>EVENTS</div>
+  <div class='option'>CONTACT</div>
+  <div class='option'>MY STORY</div>
+</div>
+<div class='header'>
+  <div class='topbar'>👟 ORDER MY SPECIAL SNEAKERS TODAY 👟</div>
+  <div class='second-bar'>
+    <i class="fas fa-bars menu-button" onclick="menu.open()"></i>
+    <div class='second-bar-main'>
+      <div class='title'>Ludwing Amadeus Mozart</div>
+    </div>
+  </div>
+  <img class='splash-img' src="dude.jpg" class="gv-billboard-poster-img">
+</div>
