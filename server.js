@@ -1,5 +1,6 @@
 const fs = require('fs')
 const http = require('http')
+const tls = require('tls')
 
 const bcrypt = require('bcrypt')
 const bodyParser = require('body-parser')
@@ -252,5 +253,14 @@ app.use(function(req, res, next) {
   static(req, res, next)
 })
 
-http.createServer(app).listen(PORT)
+const options = {
+    key: fs.readFileSync('/etc/letsencrypt/live/wintercms.com/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/wintercms.com/fullchain.pem'),
+    // ca: fs.readFileSync('certs/ca/ca.crt'), // authority chain for the clients
+    // requestCert: true, // ask for a client cert
+    //rejectUnauthorized: false, // act on unauthorized clients at the app level
+};
+
+
+tls.createServer(app).listen(PORT)
 console.log(`listening on ${PORT}`)

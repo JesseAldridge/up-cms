@@ -1,0 +1,171 @@
+I've set up Postfix on a Digital Ocean server running Ubuntu 16.04.5 LTS. When I send a message to any gmail address it gets marked as spam. I worked through a bunch of problems on https://www.mail-tester.com and now have a 10/10 score, but still my messages are marked as spam.
+
+SPF is correct
+DKIM is correct
+DMARC is correct
+TLS is set
+My site is not blacklisted anywhere
+Reverse DNS is correct
+MXE Record is set
+PTR record is set
+
+MX Toolbox reports no issues except for a warning about "SOA Expire Value"  (which based on my research shouldn't matter) https://mxtoolbox.com/Pro/domain/wintercms.com#/
+
+I'm using namecheap.com as my DNS provider.
+
+Here the last lines from `/var/log/mail.log`:
+
+```
+Dec 27 23:09:48 wintercms postfix/pickup[15812]: 72B8C80450: uid=0 from=<root@wintercms.com>
+Dec 27 23:09:48 wintercms postfix/cleanup[15819]: 72B8C80450: message-id=<20181227230948.72B8C80450@mail.wintercms.com>
+Dec 27 23:09:48 wintercms opendkim[8641]: 72B8C80450: DKIM-Signature field added (s=mail, d=wintercms.com)
+Dec 27 23:09:48 wintercms postfix/qmgr[15813]: 72B8C80450: from=<root@wintercms.com>, size=436, nrcpt=1 (queue active)
+Dec 27 23:09:48 wintercms postfix/smtp[15821]: connect to gmail-smtp-in.l.google.com[2a00:1450:400c:c00::1a]:25: Network is unreachable
+Dec 27 23:09:48 wintercms postfix/smtp[15821]: 72B8C80450: to=<jessealdridge6@gmail.com>, relay=gmail-smtp-in.l.google.com[74.125.133.27]:25, delay=0.21, delays=0.05/0.02/0.07/0.07, dsn=2.0.0, status=sent (250 2.0.0 OK 1545952188 b12si20106772wrv.58 - gsmtp)
+Dec 27 23:09:48 wintercms postfix/qmgr[15813]: 72B8C80450: removed
+```
+
+Here of running `ehlo` via `telnet`:
+```
+root@wintercms:~# telnet localhost 25
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+220 mail.wintercms.com ESMTP Postfix (Ubuntu)
+ehlo localhost
+250-mail.wintercms.com
+250-PIPELINING
+250-SIZE 10240000
+250-VRFY
+250-ETRN
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250 DSN
+```
+
+root@wintercms:~# cat /etc/mailname
+wintercms.com
+
+root@wintercms:~# hostname --fqdn
+wintercms.com
+
+root@wintercms:~# host 68.183.73.179
+179.73.183.68.in-addr.arpa domain name pointer mail.wintercms.com.
+
+```
+root@wintercms:~# dig wintercms.com
+
+; <<>> DiG 9.10.3-P4-Ubuntu <<>> wintercms.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 47143
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;wintercms.com.     IN  A
+
+;; ANSWER SECTION:
+wintercms.com.    1040  IN  A 68.183.73.179
+
+;; Query time: 4 msec
+;; SERVER: 67.207.67.2#53(67.207.67.2)
+;; WHEN: Thu Dec 27 21:11:24 UTC 2018
+;; MSG SIZE  rcvd: 58
+```
+
+```
+root@wintercms:~# dig mail.wintercms.com
+
+; <<>> DiG 9.10.3-P4-Ubuntu <<>> mail.wintercms.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 56585
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;mail.wintercms.com.    IN  A
+
+;; ANSWER SECTION:
+mail.wintercms.com. 1800  IN  A 68.183.73.179
+
+;; Query time: 6 msec
+;; SERVER: 67.207.67.2#53(67.207.67.2)
+;; WHEN: Thu Dec 27 21:11:38 UTC 2018
+;; MSG SIZE  rcvd: 63
+```
+
+Here is my Postfix config:
+
+```
+root@wintercms:~# cat /etc/postfix/main.cf
+# See /usr/share/postfix/main.cf.dist for a commented, more complete version
+
+
+# Debian specific:  Specifying a file name will cause the first
+# line of that file to be used as the name.  The Debian default
+# is /etc/mailname.
+#myorigin = /etc/mailname
+
+smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
+biff = no
+
+# appending .domain is the MUA's job.
+append_dot_mydomain = no
+
+# Uncomment the next line to generate "delayed mail" warnings
+#delay_warning_time = 4h
+
+readme_directory = no
+
+# TLS parameters
+smtpd_tls_cert_file=/etc/letsencrypt/live/wintercms.com/fullchain.pem
+smtpd_tls_key_file=/etc/letsencrypt/live/wintercms.com/privkey.pem
+smtpd_use_tls=yes
+smtp_tls_security_level = may
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+
+# See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
+# information on enabling SSL in the smtp client.
+
+smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+myhostname = mail.wintercms.com
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+mydestination = $myhostname, winter-cms, localhost.localdomain, , localhost, wintercms.com, winter-cms.com
+relayhost =
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+mailbox_size_limit = 0
+recipient_delimiter = +
+inet_interfaces = all
+inet_protocols = all
+myorigin = /etc/mailname
+
+milter_protocol = 2
+milter_default_action = accept
+smtpd_milters = inet:localhost:12301
+non_smtpd_milters = inet:localhost:12301
+```
+
+According to this thread: https://www.digitalocean.com/community/questions/multiple-ptr-reverse-dns-records-postfix It looks like the way to get reverse DNS working right with Digital Ocean is to rename your server through their interface to `mail.<mydomain>`, which I did. That's why you sometimes see `mail.wintercms.com` in the output above and other times just `wintercms.com`. I'm not sure if this is related to my problem.
+
+I'm running a basic NodeJs server on the same box on port 80. I don't think it's relevant, but in case it is, here is the code: https://github.com/JesseAldridge/winter-cms/blob/master/server.js
+
+I have only ever sent a handful of emails from this server -- less than 100 test emails manually sent to various accounts I control over the course of today.  I have tried varying the body contents and subject contents of my messages.  The command I use to send the messages is similar to this: `echo "hello gmail i am testing you" | mail -s "this is my subject" -a "From: root@wintercms.com" JesseAldridge4@gmail.com`
+
+If I login to a recipient gmail account I can manually mark the message as "not spam" and from then on additional messages will arrive in the inbox for that recipient. But of course it would look ridiculous if I have to tell customers to dig my initial email out of their spam folder and click "not spam" before they can start receiving emails from me.
+
+The reason the Gmail client gives for marking the messages as spam is always "It is similar to messages that were identified as spam in the past." Which is not helpful since it doesn't describe these mysterious other messages at all or say why *they* were marked as spam.
+
+I see a similar question was asked here: https://stackoverflow.com/questions/24654209/email-flagged-as-spam-with-correct-authentication But it appears the guy was not able to resolve it. The question is 4.5 years old and the guy is using Django whereas I'm using Postfix.
+
+The above StackOverflow question references an alternate blacklist checking site. And that one does show my site blacklisted in one database out of sixty or so: https://www.dnsbl.info/dnsbl-database-check.php I have no idea why. I contacted the service via their contact form but have not heard back. I'm not sure if this is the source of my problem.
+
+This site http://www.surbl.org/surbl-analysis says my ip is not blacklisted.
+
+https://support.google.com/mail/answer/81126?hl=en&rd=1

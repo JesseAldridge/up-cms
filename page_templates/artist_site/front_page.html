@@ -64,7 +64,6 @@
   }
 
   .menu.closed {
-    /*display: none;*/
     left: -100%;
   }
 
@@ -81,6 +80,51 @@
     color: red;
   }
 
+  .img-container {
+    position: relative;
+  }
+
+  .img-play-overlay {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    opacity: .5;
+    cursor: pointer;
+  }
+
+  .img-play-overlay:hover {
+    opacity: 1;
+  }
+
+  .video-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: #000000aa;
+    transition: background 1s;
+  }
+
+  .video-overlay.closed {
+    background: #00000000;
+    z-index: -1;
+  }
+
+  .video-overlay iframe {
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  .video-overlay.closed iframe {
+    display: none;
+    z-index: -1;
+  }
+
   @media screen and (min-width: 1000px) {
   /*  .navbar {
       display: inline-block;
@@ -93,30 +137,52 @@
 </style>
 
 <script>
-  let menu = function() {
-    let menu_open = true
+  function make_openable(selector) {
+    let item_open = false
 
     return {
       close: function() {
-        menu_open = false
+        item_open = false
         this.set_html()
       },
       open: function() {
-        menu_open = true
+        item_open = true
         this.set_html()
       },
       set_html() {
-        const menu_button = document.querySelector('.menu')
-        menu_button.classList.remove("closed")
-        if(!menu_open)
-          menu_button.classList.add("closed")
+        const element = document.querySelector(selector)
+        element.classList.remove("closed")
+        if(!item_open)
+          element.classList.add("closed")
       }
     }
-  }()
+  }
+
+  let main_menu = make_openable('.menu')
+  let video_overlay = make_openable('.video-overlay')
+
+
+  // https://developers.google.com/youtube/iframe_api_reference
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      height: '390',
+      width: '640',
+      videoId: 'Rb0UmrCXxVA',
+    });
+  }
+  function stopVideo() {
+    player.stopVideo();
+  }
+
 </script>
 
-<div class='menu'>
-  <div class='option' onclick="menu.close()">
+<div class='menu closed'>
+  <div class='option' onclick="main_menu.close()">
     <i class="fas fa-window-close"></i>
   </div>
   <div class='option'>FIRST IN LINE</div>
@@ -129,10 +195,17 @@
 <div class='header'>
   <div class='topbar'>👟 ORDER MY SPECIAL SNEAKERS TODAY 👟</div>
   <div class='second-bar'>
-    <i class="fas fa-bars menu-button" onclick="menu.open()"></i>
+    <i class="fas fa-bars menu-button" onclick="main_menu.open()"></i>
     <div class='second-bar-main'>
-      <div class='title'>Ludwing Amadeus Mozart</div>
+      <div class='title'>Ludwig Mozart</div>
     </div>
   </div>
-  <img class='splash-img' src="dude.jpg" class="gv-billboard-poster-img">
+  <div class='img-container'>
+    <img class='splash-img' src="violinist-tall.jpg">
+    <img class='img-play-overlay' src="btn-play-hover.png" onclick="video_overlay.open()">
+  </div>
+
+  <div class='video-overlay closed' onclick="video_overlay.close(); stopVideo()">
+    <div id="player"></div>
+  </div>
 </div>
